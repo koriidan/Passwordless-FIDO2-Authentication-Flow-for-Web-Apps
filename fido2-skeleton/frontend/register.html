@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create an Account | FIDO2 Passwordless Login</title>
+  <link rel="stylesheet" href =css/style.css>
+</head>
+
+<body>
+  <main class="login-container">
+    <div class="logo" aria-hidden="true">
+      <span>🔒</span>
+    </div>
+
+    <p class="subtitle">
+      Create an account to sign in securely without a password.
+    </p>
+
+    <form id="registerForm">
+      <div class="input-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Enter your username" autocomplete="username" required>
+      </div>
+
+      <div class="input-group">
+        <label for ="displayName">Display Name</label>
+        <input type="text" id="displayName" name="displayName" placeholder="Enter your full name" autocomplete="name" required>
+      </div>
+
+      <button type="submit" class="primary-btn">
+        Register with Passkey
+      </button>
+    </form>
+
+    <p id="message" role="status" aria-live="polite"></p>
+
+    <p class="register-text">
+    Already have an account?
+    <a href="index.html">Sign In</a>
+    </p>
+  </main>
+
+  <script src="js/register.js"></script>
+</body>
+</html>

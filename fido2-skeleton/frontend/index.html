@@ -1,16 +1,55 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>CS4389 Passwordless Demo — frontend stub</title>
+  <title>FIDO2 Passwordless Login</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
   <!-- Frontend team: replace this stub with the real UI.
        See README.md and ../API_CONTRACT.md. -->
-  <main>
-    <h1>Passwordless / FIDO2 Demo</h1>
-    <p>Frontend stub — build the real login UI here.</p>
+  <main class ="login-container">
+
+    <div class ="logo" aria-hidden="true">
+      <span>🔒</span>
+    </div>
+
+    <p class="subtitle">
+      Sign in securely without a password.
+    </p>
+
+    <form id ="loginForm">
+      <div class="input-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Enter your username" required>
+      </div>
+
+      <button type="submit" class="primary-btn">
+                Sign in with Passkey
+      </button>
+
+    </form>
+
+    <p class="divider">OR</p>
+
+    <button type="button" class="secondary-button" id="pushLogin">
+    Sign in with Push Notification
+    </button>
+
+    <button type="button" class="secondary-btn" id="totpLogin">
+    Sign in with Authenication Code
+    </button>
+
+    <p id="message" role="status" aria-live="polite"></p>
+    
+    <p class="register-text"> 
+      Dont have an account?
+      <a href="register.html" id="registerLink">Register here</a>
+    </p>
   </main>
+<script src="js/app.js"></script>
 </body>
 </html>
