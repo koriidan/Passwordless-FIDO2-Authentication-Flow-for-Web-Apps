@@ -51,3 +51,20 @@ export function verifyRegistration(username, attestationResponse) {
         })
     });
 }
+
+export function getLoginOptions(username) {
+    return apiRequest("/login/options", {
+        method: "POST",
+        body: JSON.stringify({ username })
+    });
+}
+
+export function verifyLogin(username, assertionResponse) {
+    return apiRequest("/login/verify", {
+        method: "POST",
+        body: JSON.stringify({
+            username,
+            assertionResponse
+        })
+    });
+}
