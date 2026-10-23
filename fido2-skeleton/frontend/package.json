@@ -1,0 +1,18 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "This folder is yours. The backend team left it a stub on purpose so you can\r structure it however you like (vanilla JS, React + Vite, whatever).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@simplewebauthn/browser": "^14.0.0"
+  },
+  "devDependencies": {
+    "vite": "^8.3.5"
+  }
+}
