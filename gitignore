@@ -1,0 +1,11 @@
+# Editor / IDE settings
+.idea/
+.vscode/
+
+# Dependencies and secrets (also ignored inside backend/ and frontend/)
+node_modules/
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
