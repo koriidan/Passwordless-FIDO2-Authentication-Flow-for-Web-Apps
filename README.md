@@ -110,17 +110,13 @@ Per the course's Responsible AI Use policy, we disclose the following use of
    [Authentication, Identity Management, and Wireless Security]..."
 2. "If we were to go towards the WPA route... how would we do anything with WPA?"
 3. "Is there any way to do this all through simulation, with no hardware?"
-4. "I'm going to be focusing more on backend, so what should my plan be / what
-   should I recommend to my teammates?"
-5. "Why do I need APIs for these calls, is it the same as calling functions?"
-6. "So the backend isn't much in the browser other than input sanitizing?"
-7. "I'm planning to create the repo as a skeleton structure for backend. Should
+4. "Why do I need APIs for these calls, is it the same as calling functions?"
+5. "So the backend isn't much in the browser other than input sanitizing?"
+6. "I'm planning to create the repo as a skeleton structure for backend. Should
    frontend be on there too?"
-8. "Can you list the distribution of work between the backend people... and
+7. "Can you list the distribution of work between the backend people... and
    explain the flow of the program and what it means to keep something persistent?"
-9. "Any update needed on the code then?"
-10. "Could you write the disclosure?" / "Can you create both the disclosure and a
-    project summary for the root README?"
+
 
 ### Reflection
 
