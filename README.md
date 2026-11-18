@@ -117,6 +117,34 @@ Per the course's Responsible AI Use policy, we disclose the following use of
 7. "Can you list the distribution of work between the backend people... and
    explain the flow of the program and what it means to keep something persistent?"
 
+### Melisha's prompts (using Copilot)
+1. How do I run the program?
+2. Create a list with examples of each to do for backend 1
+3. Summarize and explain in detail the skeleton code given for my sections
+4. I do not see POST on the devtools, where would that be
+5. I tested both the register html and the dashboard hmtl page, however when I input the registered username into the dashboard
+    it says it failed to update counter. why is that and where should I look to fix it? 
+6. when i test it, i have both a register html page and a index html page. the register page works fine. but when i put the login info for an account that is registered already it shuts down the backend. the terminal for the backend says this when it happens: FIDO2 backend listening on http://localhost:3000
+      RP ID: localhost · expecting frontend origin: http://localhost:5173
+    file:///C:/Users/Melis/Documents/GitHub/Passwordless-FIDO2-Authentication-Flow-for-Web-Apps/fido2-skeleton/backend/src/services/webauthn.js:56
+        allowCredentials: allowCredentials.map((credential) => ({
+                                          ^
+
+    TypeError: allowCredentials.map is not a function
+        at buildAuthenticationOptions (file:///C:/Users/Melis/Documents/GitHub/Passwordless-FIDO2-Authentication-Flow-for-Web-Apps/fido2-skeleton/backend/src/services/webauthn.js:56:40)
+        at file:///C:/Users/Melis/Documents/GitHub/Passwordless-FIDO2-Authentication-Flow-for-Web-Apps/fido2-skeleton/backend/src/routes/auth.js:98:25
+        at Layer.handle [as handle_request] (C:\Users\Melis\Documents\GitHub\Passwordless-FIDO2-Authentication-Flow-for-Web-Apps\fido2-skeleton\backend\node_modules\express\lib\router\layer.js:95:5)
+        at next (C:\Users\Melis\Documents\GitHub\Passwordless-FIDO2-Authentication-Flow-for-Web-Apps\fido2-skeleton\backend\node_modules\express\lib\router\route.js:149:13)
+        at file:///C:/Users/Melis/Documents/GitHub/Passwordless-FIDO2-Authentication-Flow-for-Web-Apps/fido2-skeleton/backend/src/middleware/validate.js:11:5
+        at Layer.handle [as handle_request] (C:\Users\Melis\Documents\GitHub\Passwordless-FIDO2-Authentication-Flow-for-Web-Apps\fido2-skeleton\backend\node_modules\express\lib\router\layer.js:95:5)
+        at next (C:\Users\Melis\Documents\GitHub\Passwordless-FIDO2-Authentication-Flow-for-Web-Apps\fido2-skeleton\backend\node_modules\express\lib\router\route.js:149:13)
+        at validUsername (file:///C:/Users/Melis/Documents/GitHub/Passwordless-FIDO2-Authentication-Flow-for-Web-Apps/fido2-skeleton/backend/src/middleware/validate.js:21:3)
+        at Layer.handle [as handle_request] (C:\Users\Melis\Documents\GitHub\Passwordless-FIDO2-Authentication-Flow-for-Web-Apps\fido2-skeleton\backend\node_modules\express\lib\router\layer.js:95:5)
+        at next (C:\Users\Melis\Documents\GitHub\Passwordless-FIDO2-Authentication-Flow-for-Web-Apps\fido2-skeleton\backend\node_modules\express\lib\router\route.js:149:13)
+
+    Node.js v22.23.5
+    Failed running 'src/server.js'. Waiting for file changes before restarting... why does it say that and how can i fix it?
+7. Is everything working well? are there anymore tests I should do 
 
 ### Reflection
 
@@ -128,3 +156,10 @@ team is writing the authentication, database, session, and recovery logic itself
 
 > Team members who use AI for their own parts should add their prompts and a short
 > reflection to this section.
+
+### Melisha's reflection
+
+Copilot helped me get started on the project. At the beginning, I was not too familiar with programming projects that required authentication so I was a bit
+confused with the skeleton code. However, Copilot was able to point me in the right direction and help me understand the skeleton I would be implementing
+everything on. I also do not typically run programs that have a html page so I had to learn how to set it up and run it on my local machine, which Copilot 
+assisted with as well. I also used it in order to aid with debugging when I was not sure what was going on or where the issue was.

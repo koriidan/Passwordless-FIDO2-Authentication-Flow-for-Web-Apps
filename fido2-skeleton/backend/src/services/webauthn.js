@@ -17,17 +17,18 @@ import { config } from '../config/index.js';
 const challengeStore = new Map(); // username -> challenge
 
 // --- Registration -----------------------------------------------------------
-
+//melisha - changed this from the skeleton code
 export async function buildRegistrationOptions(user, existingCredentials = []) {
   const options = await generateRegistrationOptions({
     rpName: config.rpName,
     rpID: config.rpID,
     userName: user.username,
     userDisplayName: user.displayName,
-    attestationType: 'none',
-    excludeCredentials: existingCredentials.map((c) => ({ id: c.credential_id })),
-    authenticatorSelection: { userVerification: 'preferred', residentKey: 'preferred' },
-  });
+    attestation: 'none',
+    excludeCredentials: existingCredentials.map((credential) => ({
+      id: credential.credential_id,
+      transports: credential.transports ? JSON.parse(credential.transports) : undefined, })), residentKey: 'preferred', userVerification: 'preferred', });
+
   challengeStore.set(user.username, options.challenge);
   return options;
 }
@@ -49,14 +50,24 @@ export async function checkRegistration(username, attestationResponse) {
 
 // --- Authentication ---------------------------------------------------------
 
-export async function buildAuthenticationOptions(allowCredentials = []) {
+export async function buildAuthenticationOptions(username, allowCredentials = []) {
   const options = await generateAuthenticationOptions({
     rpID: config.rpID,
-    allowCredentials: allowCredentials.map((c) => ({ id: c.credential_id })),
+    allowCredentials: allowCredentials.map((credential) => ({
+      id: credential.credential_id,
+      transports: credential.transports ? JSON.parse(credential.transports) : undefined, })),
     userVerification: 'preferred',
   });
   // TODO (backend 1): stash options.challenge keyed by username for the verify step.
+  challengeStore.set(username, options.challenge);
   return options;
+}
+export function getAuthenticationChallenge(username) {
+  return challengeStore.get(username);
+}
+
+export function clearAuthenticationChallenge(username) {
+  challengeStore.delete(username);
 }
 
 export async function checkAuthentication(assertionResponse, storedCredential, expectedChallenge) {
@@ -69,6 +80,7 @@ export async function checkAuthentication(assertionResponse, storedCredential, e
       id: storedCredential.credential_id,
       publicKey: storedCredential.public_key,
       counter: storedCredential.counter,
+      transports: storedCredential.transports ? JSON.parse(storedCredential.transports) : undefined,
     },
   });
   // verification.authenticationInfo.newCounter MUST be written back to the DB,
