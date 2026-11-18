@@ -130,7 +130,7 @@ export function getCredentialsForId(credential_id){
 }
 
 const update_counter_stmt = db.prepare('UPDATE credentials SET counter = ? WHERE ? > counter AND credential_id = ?');
-export function updateCounter(credential_id, newCounter){
+export function updateCounter({credential_id, newCounter}){
 //Daniel: backend 1 becareful with cases where there are 0 for counter and 0 for new counter, if both is 0 then new value will just be 0.
   const update = update_counter_stmt.run(newCounter, newCounter, credential_id);
   return update.changes === 1;
@@ -142,7 +142,48 @@ export function  logAttempt({username, method, outcome, detail}){
   return log.changes === 1;
 }
 
+//TOTP
 
+const set_totp_stmt = db.prepare('UPDATE users SET totp_secret = ? WHERE id = ?')
+export function setTotpSecret({user_id, totp_secret}){
+  const set = set_totp_stmt.run(totp_secret, user_id);
+  return set.changes === 1;
+}
+
+const set_lastTotp_stmt = db.prepare('UPDATE users SET last_totp_step = ? WHERE id = ? AND (last_totp_step < ? OR last_totp_step IS NULL)')
+export function setLastTotpStep({user_id, step}){// only if higher; handle NULL
+  const lastSet = set_lastTotp_stmt.run(step, user_id, step);
+  return lastSet.changes === 1;
+}              
+//RECOVERY
+
+const save_code_stmt = db.prepare('INSERT INTO recovery_codes(user_id, code_hash) VALUES (?, ?)');
+
+const delete_code_stmt = db.prepare('DELETE FROM recovery_codes WHERE user_id = ?');
+const replaceCode = db.transaction((user_id, code_hashes) =>{
+    delete_code_stmt.run(user_id)
+    for(const code_hash of code_hashes){
+      save_code_stmt.run(user_id, code_hash);
+    }
+});
+export function saveRecoveryCodes({user_id, code_hashes})   // delete old set + insert new, in one transaction
+{
+  replaceCode(user_id, code_hashes);
+  return true;
+}
+
+const get_unusedCode_stmt = db.prepare('SELECT * FROM recovery_codes WHERE used_at IS NULL AND user_id = ?');
+export function getUnusedRecoveryCodes(user_id){           // returns [{ id, code_hash }, ...] where used_at IS NULL
+  const unusedCode = get_unusedCode_stmt.all(user_id);
+  return unusedCode;
+
+}
+
+const mark_recoveryCode_stmt= db.prepare('UPDATE recovery_codes SET used_at = ? WHERE used_at IS NULL AND id = ?')
+export function markRecoveryCodeUsed(id){                  // AND used_at IS NULL, return changes === 1
+  const mark = mark_recoveryCode_stmt.run(Date.now(), id);
+  return mark.changes === 1;
+}
 
 
 
