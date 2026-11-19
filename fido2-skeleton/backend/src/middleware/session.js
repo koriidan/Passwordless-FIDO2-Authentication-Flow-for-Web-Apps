@@ -4,6 +4,7 @@ import {createSessionRow, getSessionRow, deleteSessionRow} from
 '../db/index.js'
 import { config } from '../config/index.js';
 
+
 // Minimal session handling. Issues an opaque random token, sets it as an
 // httpOnly cookie, and looks it up on protected routes.
 // TODO (backend 4): persist sessions in the DB (sessions table) instead of memory,
@@ -27,6 +28,7 @@ export function createSession(res, userId, method) {
 
 export function requireSession(req, res, next) {
   const token = req.cookies?.session;
+  
   const s = token && getSessionRow(token);
   
   if (!s) return res.status(401).json({ error: 'Not authenticated' });
