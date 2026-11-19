@@ -163,3 +163,7 @@ Copilot helped me get started on the project. At the beginning, I was not too fa
 confused with the skeleton code. However, Copilot was able to point me in the right direction and help me understand the skeleton I would be implementing
 everything on. I also do not typically run programs that have a html page so I had to learn how to set it up and run it on my local machine, which Copilot 
 assisted with as well. I also used it in order to aid with debugging when I was not sure what was going on or where the issue was.
+
+### Daniel's reflection
+
+After Claude helped set up the skeleton, I used Claude Code as a tutor and reviewer while I wrote the backend 4 code myself: the database helper functions the other backends call, persistent sessions with expiry, cookie flags, and `GET /session`. It explained the concepts (prepared statements, transactions, `.get`/`.all`/`.run`) with unrelated examples. It reviewed each version I wrote, catching bugs like a session lookup that would have accepted any fake token and missing WHERE clauses that would have updated every user's rows. Claude generated the `try-db.js` test file, resolved one merge conflict, and made some of the commits. I learned to check its output too, since it was occasionally wrong (for example a miscounted test total), and the tests are what confirmed my code worked.
