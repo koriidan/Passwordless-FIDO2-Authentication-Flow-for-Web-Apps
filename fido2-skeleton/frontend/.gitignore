@@ -11,3 +11,7 @@ dist/
 
 # Debug logs
 npm-debug.log*
+
+# extension temp file
+tempCodeRunnerFile.js
+*.un~

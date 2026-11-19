@@ -34,7 +34,7 @@ export function requireSession(req, res, next) {
     return res.status(401).json({ error: 'Session Expired'})
   }
   if (s.method === 'recovery') return res.status(403).json({ error: 'Not authenticated' });
-  const reqSession = req.session({userId:s.user_id, method: s.method});
+  req.session = {userId:s.user_id, method: s.method};
   next();
 }
 
@@ -47,7 +47,7 @@ export function requireSessionAllowRecovery(req, res, next) {
     deleteSessionRow(token);
     return res.status(401).json({ error: 'Session Expired'})
   }
-  const reqSession = req.session({userId:s.user_id, method: s.method});
+  req.session = {userId:s.user_id, method: s.method};
   next();
 }
 

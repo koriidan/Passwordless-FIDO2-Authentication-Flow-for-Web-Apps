@@ -128,7 +128,7 @@ router.post('/login/verify', validUsername, requireFields(['assertionResponse'])
 
   const newCounter = result.authenticationInfo.newCounter;
   if (newCounter > credential.counter) {
-    if (!updateCounter(credential.credential_id, newCounter)) {
+    if (!updateCounter({credential_id : credential.credential_id, newCounter})) { //daniel: i just wrapped the arg with {} cuz index takes in {} for any 2+ arg
       logAttempt({
         username,
         method: 'passkey-login',
