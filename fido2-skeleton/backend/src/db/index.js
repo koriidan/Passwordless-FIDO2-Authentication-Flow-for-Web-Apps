@@ -186,4 +186,32 @@ export function markRecoveryCodeUsed(id){                  // AND used_at IS NUL
 }
 
 
+//Session
+
+const create_session_stmt = db.prepare('INSERT INTO sessions(token, user_id, method, created_at, expires_at) VALUES (?,?,?,?,?)')
+
+export function createSessionRow({token, user_id, method, expires_at}) {
+  const create = create_session_stmt.run(token, user_id, method, Date.now(), expires_at);
+  
+  return create.changes === 1;
+}
+
+const get_session_stmt = db.prepare('SELECT * FROM sessions WHERE token = ?');
+export function getSessionRow(token){
+  if(token == null)
+    return null;
+  const getSession = get_session_stmt.get(token);
+  if(getSession == null)
+     return null;
+      
+   return getSession;
+}
+
+const delete_session_stmt = db.prepare('DELETE FROM sessions WHERE token = ?');
+export function deleteSessionRow(token){
+  const deleted = delete_session_stmt.run(token);
+  return deleted.changes === 1;
+}
+
+
 
