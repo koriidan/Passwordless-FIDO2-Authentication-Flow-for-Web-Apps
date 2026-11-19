@@ -142,6 +142,26 @@ export function  logAttempt({username, method, outcome, detail}){
   return log.changes === 1;
 }
 
+
+const delete_creds_stmt = db.prepare('DELETE FROM credentials WHERE credential_id = ? AND user_id = ?');
+export function deleteCredential({ credential_id, user_id }){
+  const deleted = delete_creds_stmt.run(credential_id, user_id);
+  return deleted.changes === 1;
+}
+
+
+const get_auditUser_stmt= db.prepare('SELECT * FROM audit_log WHERE username = ? ORDER BY at DESC LIMIT 50');
+export function getAuditForUser(username){
+  const audit = get_auditUser_stmt.all(username);
+  return audit;
+}
+const get_devicesUser_stmt= db.prepare('SELECT credential_id, created_at, transports FROM credentials WHERE user_id = ?');
+export function getDevicesForUser(user_id){
+  const device = get_devicesUser_stmt.all(user_id);
+  return device;
+}
+
+
 //TOTP
 
 const set_totp_stmt = db.prepare('UPDATE users SET totp_secret = ? WHERE id = ?')
@@ -154,7 +174,8 @@ const set_lastTotp_stmt = db.prepare('UPDATE users SET last_totp_step = ? WHERE 
 export function setLastTotpStep({user_id, step}){// only if higher; handle NULL
   const lastSet = set_lastTotp_stmt.run(step, user_id, step);
   return lastSet.changes === 1;
-}              
+}      
+        
 //RECOVERY
 
 const save_code_stmt = db.prepare('INSERT INTO recovery_codes(user_id, code_hash) VALUES (?, ?)');
@@ -183,6 +204,34 @@ const mark_recoveryCode_stmt= db.prepare('UPDATE recovery_codes SET used_at = ? 
 export function markRecoveryCodeUsed(id){                  // AND used_at IS NULL, return changes === 1
   const mark = mark_recoveryCode_stmt.run(Date.now(), id);
   return mark.changes === 1;
+}
+
+
+//SESSION
+
+const create_session_stmt = db.prepare('INSERT INTO sessions(token, user_id, method, created_at, expires_at) VALUES (?,?,?,?,?)')
+
+export function createSessionRow({token, user_id, method, expires_at}) {
+  const create = create_session_stmt.run(token, user_id, method, Date.now(), expires_at);
+  
+  return create.changes === 1;
+}
+
+const get_session_stmt = db.prepare('SELECT * FROM sessions WHERE token = ?');
+export function getSessionRow(token){
+  if(token == null)
+    return null;
+  const getSession = get_session_stmt.get(token);
+  if(getSession == null)
+     return null;
+      
+   return getSession;
+}
+
+const delete_session_stmt = db.prepare('DELETE FROM sessions WHERE token = ?');
+export function deleteSessionRow(token){
+  const deleted = delete_session_stmt.run(token);
+  return deleted.changes === 1;
 }
 
 

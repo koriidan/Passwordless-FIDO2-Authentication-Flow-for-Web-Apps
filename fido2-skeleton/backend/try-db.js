@@ -12,6 +12,7 @@ const {
   logAttempt,
   setTotpSecret, setLastTotpStep,
   saveRecoveryCodes, getUnusedRecoveryCodes, markRecoveryCodeUsed,
+  deleteCredential, getDevicesForUser, getAuditForUser,
 } = await import('./src/db/index.js');
 
 let passed = 0, failed = 0;
@@ -72,5 +73,31 @@ check('alice now has 2 unused codes', () => getUnusedRecoveryCodes('abc123').len
 check('saveRecoveryCodes new set replaces old', () => saveRecoveryCodes({ user_id: 'abc123', code_hashes: ['n1:h1', 'n2:h2'] }), true);
 check('only the 2 new codes remain', () => getUnusedRecoveryCodes('abc123').map((r) => r.code_hash), ['n1:h1', 'n2:h2']);
 check("bob's code untouched", () => getUnusedRecoveryCodes('bob1').map((r) => r.code_hash), ['bob-salt:bob-hash']);
+
+console.log('--- devices (backend 5)');
+saveCredential({ credential_id: 'cred-2', user_id: 'abc123', public_key: new Uint8Array([4, 5, 6]), counter: 0, transports: ['usb'] });
+check('getDevicesForUser alice -> 2 devices', () => getDevicesForUser('abc123').length, 2);
+check('devices never include public_key', () => getDevicesForUser('abc123').some((d) => 'public_key' in d), false);
+check('device rows have only safe columns', () => Object.keys(getDevicesForUser('abc123')[0]).sort(), ['created_at', 'credential_id', 'transports']);
+check('getDevicesForUser unknown -> []', () => getDevicesForUser('nobody'), []);
+check("bob can't delete alice's passkey", () => deleteCredential({ credential_id: 'cred-2', user_id: 'bob1' }), false);
+check('alice deletes her own passkey', () => deleteCredential({ credential_id: 'cred-2', user_id: 'abc123' }), true);
+check('deleting it again -> false', () => deleteCredential({ credential_id: 'cred-2', user_id: 'abc123' }), false);
+check('alice has 1 device left', () => getDevicesForUser('abc123').length, 1);
+
+console.log('--- audit history (backend 5)');
+// `at` is Date.now(), so wait for the clock to tick between logs; otherwise
+// two rows can share a timestamp and "newest first" isn't well defined.
+const tick = () => { const t = Date.now(); while (Date.now() === t); };
+tick(); logAttempt({ username: 'alice', method: 'code', outcome: 'fail', detail: 'older' });
+tick(); logAttempt({ username: 'alice', method: 'passkey', outcome: 'success', detail: 'newest' });
+check('getAuditForUser returns an array', () => Array.isArray(getAuditForUser('alice')), true);
+check('alice has 3 attempts', () => getAuditForUser('alice').length, 3);
+check('newest attempt comes first', () => getAuditForUser('alice')[0].detail, 'newest');
+check('rows are sorted newest -> oldest', () => getAuditForUser('alice').map((r) => r.detail), ['newest', 'older', 'test']);
+check('getAuditForUser unknown -> []', () => getAuditForUser('nobody'), []);
+for (let i = 0; i < 55; i++) logAttempt({ username: 'spammer', method: 'code', outcome: 'fail', detail: `try ${i}` });
+check('audit is capped at 50 rows', () => getAuditForUser('spammer').length, 50);
+check("alice's audit doesn't include other users", () => getAuditForUser('alice').every((r) => r.username === 'alice'), true);
 
 console.log(`\n${passed} passed, ${failed} failed`);
