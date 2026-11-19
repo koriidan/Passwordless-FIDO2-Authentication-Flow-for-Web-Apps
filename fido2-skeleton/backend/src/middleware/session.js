@@ -2,13 +2,14 @@
 import crypto from 'node:crypto';
 import {createSessionRow, getSessionRow, deleteSessionRow} from 
 '../db/index.js'
+import { config } from '../config/index.js';
 
 // Minimal session handling. Issues an opaque random token, sets it as an
 // httpOnly cookie, and looks it up on protected routes.
 // TODO (backend 4): persist sessions in the DB (sessions table) instead of memory,
 // and add expiry. node --watch restarts on every file save, which wipes this Map
 // and logs everyone out.
-// TODO (backend 4): add `secure: true` to the cookie once you serve over HTTPS.
+
 
 const SESSION_TTL_MS  = 8 * 60 * 60 * 1000;   // e.g. 8 hours
 const RECOVERY_TTL_MS = 10 * 60 * 1000;       // 10 minutes
@@ -20,7 +21,7 @@ export function createSession(res, userId, method) {
   const expires_at = Date.now() + ttl;
     createSessionRow({token, user_id: userId, method, expires_at});
   
-  res.cookie('session', token, { httpOnly: true, sameSite: 'lax' });
+  res.cookie('session', token, { httpOnly: true, sameSite: 'lax', maxAge: ttl, secure: config.cookieSecure});
   return token;
 }
 
@@ -54,5 +55,6 @@ export function requireSessionAllowRecovery(req, res, next) {
 export function destroySession(req, res) {
   const token = req.cookies?.session;
   if (token) deleteSessionRow(token);
-  res.clearCookie('session');
+  res.clearCookie('session', { httpOnly: true, sameSite: 'lax', secure: config.cookieSecure});
+  
 }

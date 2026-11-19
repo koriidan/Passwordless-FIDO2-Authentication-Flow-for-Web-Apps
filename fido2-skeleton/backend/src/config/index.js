@@ -9,4 +9,6 @@ export const config = {
   rpName: process.env.RP_NAME || 'CS4389 Demo',
   origin: process.env.ORIGIN || 'http://localhost:5173',
   sessionSecret: process.env.SESSION_SECRET || 'dev-insecure-secret',
+  cookieSecure: process.env.COOKIE_SECURE === 'true'
+  //Daniel: this is true because unless something is added it will return true otherwise false
 };
