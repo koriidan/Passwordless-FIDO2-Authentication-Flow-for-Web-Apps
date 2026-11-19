@@ -142,6 +142,26 @@ export function  logAttempt({username, method, outcome, detail}){
   return log.changes === 1;
 }
 
+
+const delete_creds_stmt = db.prepare('DELETE FROM credentials WHERE credential_id = ? AND user_id = ?');
+export function deleteCredential({ credential_id, user_id }){
+  const deleted = delete_creds_stmt.run(credential_id, user_id);
+  return deleted.changes === 1;
+}
+
+
+const get_auditUser_stmt= db.prepare('SELECT * FROM audit_log WHERE username = ? ORDER BY at DESC LIMIT 50');
+export function getAuditForUser(username){
+  const audit = get_auditUser_stmt.all(username);
+  return audit;
+}
+const get_devicesUser_stmt= db.prepare('SELECT credential_id, created_at, transports FROM credentials WHERE user_id = ?');
+export function getDevicesForUser(user_id){
+  const device = get_devicesUser_stmt.all(user_id);
+  return device;
+}
+
+
 //TOTP
 
 const set_totp_stmt = db.prepare('UPDATE users SET totp_secret = ? WHERE id = ?')
@@ -154,7 +174,8 @@ const set_lastTotp_stmt = db.prepare('UPDATE users SET last_totp_step = ? WHERE 
 export function setLastTotpStep({user_id, step}){// only if higher; handle NULL
   const lastSet = set_lastTotp_stmt.run(step, user_id, step);
   return lastSet.changes === 1;
-}              
+}      
+        
 //RECOVERY
 
 const save_code_stmt = db.prepare('INSERT INTO recovery_codes(user_id, code_hash) VALUES (?, ?)');
@@ -186,7 +207,7 @@ export function markRecoveryCodeUsed(id){                  // AND used_at IS NUL
 }
 
 
-//Session
+//SESSION
 
 const create_session_stmt = db.prepare('INSERT INTO sessions(token, user_id, method, created_at, expires_at) VALUES (?,?,?,?,?)')
 
