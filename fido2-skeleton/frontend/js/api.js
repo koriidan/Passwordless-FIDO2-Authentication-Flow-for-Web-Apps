@@ -67,4 +67,29 @@ export function verifyLogin(username, assertionResponse) {
             assertionResponse
         })
     });
+
+}
+
+export function getSession() {
+    return apiRequest("/session");
+}
+
+export function logout() {
+    return apiRequest("/logout", {
+        method: "POST"
+    });
+}
+
+export function getAudit() {
+    return apiRequest("/audit");
+}
+
+export function verifyCode(username, code) {
+    return apiRequest("/code/verify", {
+        method: "POST",
+        body: JSON.stringify({
+            username,
+            code
+        })
+    });
 }

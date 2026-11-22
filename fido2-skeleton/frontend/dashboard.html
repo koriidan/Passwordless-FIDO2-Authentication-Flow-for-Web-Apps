@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to your dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <h1>You're signed in!</h1>
+  
+  <p>Signed in as: <span id="username">...</span></p>
+  <p>Method: <span id="method">...</span></p>
+  
+  <h1>Recent sign-in attempts</h1>
+  <table>
+    <thead>
+    <tr>
+    <th>Time</th>
+    <th>Method</th>
+    <th>Result</th>
+    </tr>
+ <thead>
+ <tbody id="auditRows"></tbody>
+</table>
+<p id="auditMessage"></p>
+  
+  <button id="logoutButton">Log out</button>
+
+
+  <script type="module" src="js/dashboard.js"></script>
+</body>
+</html>
