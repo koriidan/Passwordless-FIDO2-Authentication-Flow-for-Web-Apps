@@ -154,6 +154,10 @@ Per the course's Responsible AI Use policy, we disclose the following use of
 5. How to do map query data to match what is in the API_CONTRACT.md file?
 6. Why should I enforce the rule where the user can't remove the final remaining passkey?
 
+### Ximena's prompts 
+1. How does the html file and the js files work together?
+2. How
+
 ### Reflection
 
 Claude helped us choose the FIDO2 project and gave us a starting structure when
@@ -179,3 +183,6 @@ After Claude helped set up the skeleton, I used Claude Code as a tutor and revie
 ### Michael's reflection
 
 I don't have much experience with JavaScript let alone node.js and express.  So in order for me to  help with building this project, I learned some basics and essentials to get myself familiar with the skeleton code provided and how everything interacts with each other.  Using Copilot, I was able to understand things at a faster pace and it helped understand what was asked of me to implement for part of the project.  I was also not too comfortable on how to retrieve the code database from the GitHub repo and how to add code to it as well so I used Copilot to guide me on what steps I should take in order to this.
+
+### Ximena's reflection
+I don't have a lot experience with JavaScript so I was not sure how it was going to come into play with the frontend and backend. I used Claude to help guide me in making the dashboard.js and also help me understand the basics of JavaScript. I am also not the most comfortable with using GitHub so I used it to help me add my files and understand whatever error I was getting on terminal. 
