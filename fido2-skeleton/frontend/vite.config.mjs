@@ -6,7 +6,9 @@ export default defineConfig({
         rolldownOptions: {
             input: {
                 main: resolve(import.meta.dirname, "index.html"),
-                dashboard: resolve(import.meta.dirname, "dashboard.html")
+                dashboard: resolve(import.meta.dirname, "dashboard.html"),
+		push: resolve(import.meta.dirname, "push.html"),
+                pushApprove: resolve(import.meta.dirname, "push-approve.html")
             }
         }
     }
