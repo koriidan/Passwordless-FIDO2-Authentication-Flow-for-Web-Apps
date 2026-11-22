@@ -144,7 +144,15 @@ Per the course's Responsible AI Use policy, we disclose the following use of
 
     Node.js v22.23.5
     Failed running 'src/server.js'. Waiting for file changes before restarting... why does it say that and how can i fix it?
-7. Is everything working well? are there anymore tests I should do 
+7. Is everything working well? are there anymore tests I should do
+
+### Michael's prompts (Using Copilot)
+1. What happens to the request and what does requireSession do?
+2. Where are the helper functions implemented for me to use?
+3. How do I use the helper function getDevicesForUser for this file?
+4. What is the API_CONTRACT.md file and what is it for?
+5. How to do map query data to match what is in the API_CONTRACT.md file?
+6. Why should I enforce the rule where the user can't remove the final remaining passkey?
 
 ### Reflection
 
@@ -167,3 +175,7 @@ assisted with as well. I also used it in order to aid with debugging when I was 
 ### Daniel's reflection
 
 After Claude helped set up the skeleton, I used Claude Code as a tutor and reviewer while I wrote the backend 4 code myself: the database helper functions the other backends call, persistent sessions with expiry, cookie flags, and `GET /session`. It explained the concepts (prepared statements, transactions, `.get`/`.all`/`.run`) with unrelated examples. It reviewed each version I wrote, catching bugs like a session lookup that would have accepted any fake token and missing WHERE clauses that would have updated every user's rows. Claude generated the `try-db.js` test file, resolved one merge conflict, and made some of the commits. I learned to check its output too, since it was occasionally wrong (for example a miscounted test total), and the tests are what confirmed my code worked.
+
+### Michael's reflection
+
+I don't have much experience with JavaScript let alone node.js and express.  So in order for me to  help with building this project, I learned some basics and essentials to get myself familiar with the skeleton code provided and how everything interacts with each other.  Using Copilot, I was able to understand things at a faster pace and it helped understand what was asked of me to implement for part of the project.  I was also not too comfortable on how to retrieve the code database from the GitHub repo and how to add code to it as well so I used Copilot to guide me on what steps I should take in order to this.
