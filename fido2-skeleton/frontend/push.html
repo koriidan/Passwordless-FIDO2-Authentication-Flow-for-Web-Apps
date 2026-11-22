@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Push Authentication</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/push.css">
+</head>
+
+<body class="push-page">
+
+    <main class="login-container">
+
+        <div class="logo" aria-hidden="true">
+            <span>📱</span>
+        </div>
+
+        <h1>Push Authentication</h1>
+
+        <p class="subtitle">
+            Approve your login using your trusted device.
+        </p>
+
+        <div class="input-group">
+            <label for="pushUsername">Username</label>
+
+            <input
+                type="text"
+                id="pushUsername"
+                placeholder="Enter your username"
+                autocomplete="username"
+                required
+            >
+        </div>
+
+        <button
+            type="button"
+            id="startPush"
+            class="primary-btn">
+            Send Push Request
+        </button>
+
+        <!-- Initially hidden until a request starts -->
+        <section id="pushSection" hidden>
+
+            <h2>Match This Number</h2>
+
+            <p>
+                Select this number on your trusted device
+                to approve your login.
+            </p>
+
+            <div class="push-number">
+                <span id="pushNumber">--</span>
+            </div>
+
+            <p id="pushStatus"
+               role="status"
+               aria-live="polite">
+                Waiting for approval...
+            </p>
+
+            <button
+                type="button"
+                id="cancelPush"
+                class="secondary-btn">
+                Stop Waiting
+            </button>
+
+        </section>
+
+        <p id="message"
+           role="status"
+           aria-live="polite"></p>
+
+        <p class="register-text">
+            <a href="index.html">Back to Login</a>
+        </p>
+
+    </main>
+
+    <script type="module" src="js/push.js"></script>
+
+</body>
+</html>
