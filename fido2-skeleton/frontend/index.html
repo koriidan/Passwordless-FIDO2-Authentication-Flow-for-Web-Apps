@@ -40,8 +40,27 @@
     </button>
 
     <button type="button" class="secondary-btn" id="totpLogin">
-    Sign in with Authenication Code
+    Sign in with Authentication Code
     </button>
+
+    <div id="totpSection" hidden>
+        <label for="totpCode">6-Digit Authentication Code</label>
+
+        <input
+            type="text"
+            id="totpCode"
+            name="totpCode"
+            inputmode="numeric"
+            pattern="[0-9]{6}"
+            maxlength="6"
+            autocomplete="one-time-code"
+            placeholder="Enter 6-digit code"
+        >
+
+        <button type="button" class="primary-btn" id="verifyTotp">
+            Verify Code
+        </button>
+    </div>
 
     <p id="message" role="status" aria-live="polite"></p>
     

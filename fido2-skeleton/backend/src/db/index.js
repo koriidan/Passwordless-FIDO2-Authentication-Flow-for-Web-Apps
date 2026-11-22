@@ -175,6 +175,27 @@ export function setLastTotpStep({user_id, step}){// only if higher; handle NULL
   const lastSet = set_lastTotp_stmt.run(step, user_id, step);
   return lastSet.changes === 1;
 }      
+
+const enrollTotpTransaction = db.transaction(
+  ({ user_id, totp_secret, step }) => {
+    const result = db.prepare(`
+      UPDATE users
+      SET totp_secret = ?, last_totp_step = ?
+      WHERE id = ?
+        AND totp_secret IS NULL
+    `).run(totp_secret, step, user_id);
+
+    return result.changes === 1;
+  }
+);
+
+export function enrollTotp({ user_id, totp_secret, step }) {
+  return enrollTotpTransaction({
+    user_id,
+    totp_secret,
+    step
+  });
+}
         
 //RECOVERY
 

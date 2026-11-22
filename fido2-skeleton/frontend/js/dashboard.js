@@ -1,5 +1,6 @@
 
 import { getSession, logout, getAudit, apiRequest } from "./api.js";
+import QRCode from "qrcode";
 
 const userName = document.getElementById("username");
 const method = document.getElementById("method");
@@ -8,6 +9,14 @@ const auditRows = document.getElementById("auditRows");
 const auditMessage = document.getElementById("auditMessage");
 const deviceList = document.getElementById("deviceList");
 const deviceMessage = document.getElementById("deviceMessage");
+const setupTotpButton = document.getElementById("setupTotpButton");
+const totpSetupArea = document.getElementById("totpSetupArea");
+const totpSetupLink = document.getElementById("totpSetupLink");
+const totpSetupMessage = document.getElementById("totpSetupMessage");
+const totpConfirmCode = document.getElementById("totpConfirmCode");
+const confirmTotpButton = document.getElementById("confirmTotpButton");
+const totpManualKey = document.getElementById("totpManualKey");
+const totpQrCode = document.getElementById("totpQrCode");
 
 // STEP 1: Check whether the user is logged in.
 async function checkSession() {
@@ -26,6 +35,28 @@ async function checkSession() {
 }
 
 // STEP 2: Load registered passkeys.
+// Check whether an authenticator app is already enrolled.
+async function checkTotpStatus() {
+    try {
+        const data = await apiRequest("/code/status");
+
+        if (data.totpEnabled) {
+            setupTotpButton.hidden = true;
+            totpSetupMessage.textContent =
+                "Authenticator app already configured.";
+        } else {
+            setupTotpButton.hidden = false;
+            totpSetupMessage.textContent = "";
+        }
+
+    } catch (error) {
+        console.error("TOTP status check failed:", error);
+        setupTotpButton.hidden = true;
+        totpSetupMessage.textContent =
+            "Could not check authenticator setup status.";
+    }
+}
+
 async function loadDevices() {
     deviceList.replaceChildren();
     deviceMessage.textContent = "";
@@ -133,6 +164,89 @@ async function loadAudit() {
     }
 }
 
+// TOTP SETUP: Start authenticator enrollment.
+setupTotpButton.addEventListener("click", async function() {
+    setupTotpButton.disabled = true;
+    totpSetupMessage.textContent = "";
+
+    try {
+        const data = await apiRequest("/code/enroll", {
+            method: "POST"
+        });
+
+        if (!data.otpauthURI) {
+            throw new Error("Authenticator setup link was not returned.");
+        }
+
+
+        if (!data.manualKey) {
+            throw new Error("Manual setup key was not returned.");
+        }
+
+        totpSetupLink.href = data.otpauthURI;
+        totpManualKey.textContent = data.manualKey;
+        // Generate the authenticator QR code.
+        await QRCode.toCanvas(totpQrCode, data.otpauthURI, {
+            width: 220,
+            margin: 2,
+            errorCorrectionLevel: "M"
+        });
+        totpSetupArea.hidden = false;
+
+
+        totpSetupMessage.textContent =
+            "Scan the QR code or enter the manual setup key, then enter your 6-digit code.";
+
+    } catch (error) {
+        console.error("TOTP enrollment failed:", error);
+        totpSetupMessage.textContent = error.message;
+        setupTotpButton.disabled = false;
+    }
+});
+
+ // TOTP SETUP: Confirm authenticator enrollment.
+confirmTotpButton.addEventListener("click", async function() {
+    const code = totpConfirmCode.value.trim();
+
+    if (!/^\d{6}$/.test(code)) {
+        totpSetupMessage.textContent =
+            "Please enter a valid 6-digit code.";
+        return;
+    }
+
+    confirmTotpButton.disabled = true;
+    totpSetupMessage.textContent = "";
+
+    try {
+        const data = await apiRequest("/code/enroll/confirm", {
+            method: "POST",
+            body: JSON.stringify({ code })
+        });
+
+        if (!data.enrolled) {
+            throw new Error("Authenticator setup was not confirmed.");
+        }
+
+        totpSetupArea.hidden = true;
+        totpManualKey.textContent = "";
+        totpConfirmCode.value = "";
+        totpSetupLink.removeAttribute("href");
+        totpQrCode.getContext("2d").clearRect(
+            0, 0, totpQrCode.width, totpQrCode.height
+        );
+        setupTotpButton.hidden = true;
+
+        totpSetupMessage.textContent =
+            "Authenticator app successfully enrolled! You can now use it to sign in.";
+
+    } catch (error) {
+        console.error("TOTP confirmation failed:", error);
+        totpSetupMessage.textContent = error.message;
+    } finally {
+        confirmTotpButton.disabled = false;
+    }
+});
+
 // STEP 4: Log out.
 logoutButton.addEventListener("click", async function() {
     logoutButton.disabled = true;
@@ -158,7 +272,8 @@ async function initializeDashboard() {
 
     await Promise.all([
         loadDevices(),
-        loadAudit()
+        loadAudit(),
+        checkTotpStatus()
     ]);
 }
 

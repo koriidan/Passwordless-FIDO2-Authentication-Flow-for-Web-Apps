@@ -61,6 +61,84 @@
             <p id="auditMessage"></p>
         </section>
 
+        <section class="dashboard-section" id="authenticatorSection">
+            <h2>Authenticator App Setup</h2>
+
+            <p>
+                Set up an authenticator app to sign in
+                if your passkey is unavailable.
+            </p>
+
+            <button id="setupTotpButton" class="primary-btn">
+                Set Up Authenticator
+            </button>
+
+            <div id="totpSetupArea" hidden>
+                <p>
+                    Add this account to your authenticator app
+                    by scanning the QR code, opening the setup link,
+                    or entering the manual setup key.
+                </p>
+
+                <a id="totpSetupLink" href="#">
+                    Open Authenticator Setup
+                </a>
+
+                <div id="totpQrSetup">
+                    <p>
+                        <strong>Scan QR Code:</strong>
+                    </p>
+
+                    <p>
+                        Open Google Authenticator or another
+                        authenticator app and scan this QR code.
+                    </p>
+
+                    <canvas id="totpQrCode"></canvas>
+                </div>
+
+                <div id="totpManualSetup">
+                    <p>
+                        <strong>Manual Setup Key:</strong>
+                    </p>
+
+                    <p id="totpManualKey"></p>
+
+                    <p>
+                        Open Google Authenticator, select
+                        "Enter a setup key", and enter this key.
+                        Choose "Time based" as the key type.
+                    </p>
+
+                    <p>
+                        Keep this key private. Anyone with it
+                        can generate authentication codes.
+                    </p>
+                </div>
+
+
+                <p>
+                    Enter the 6-digit code from your
+                    authenticator app to confirm setup.
+                </p>
+
+                <input
+                    type="text"
+                    id="totpConfirmCode"
+                    placeholder="6-digit code"
+                    maxlength="6"
+                    inputmode="numeric"
+                    autocomplete="one-time-code"
+                >
+
+                <button id="confirmTotpButton" class="primary-btn">
+                    Confirm Setup
+                </button>
+            </div>
+
+            <p id="totpSetupMessage" role="status"></p>
+        </section>
+
         <button id="logoutButton" class="primary-btn">
             Log Out
         </button>

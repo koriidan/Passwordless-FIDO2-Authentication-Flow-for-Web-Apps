@@ -14,7 +14,40 @@ export function otpauthURI(username, secret) {
 
 // True if the 6-digit code matches the secret right now.
 export function verifyCode(secret, code) {
-  // TODO (backend 3): return authenticator.verify({ token: code, secret });
-  // Consider allowing one step of clock drift and document the tradeoff.
-  return false;
+  if (!secret || !/^\d{6}$/.test(String(code))) {
+    return false;
+  }
+
+  return authenticator.verify({
+    token: String(code),
+    secret
+  });
+}
+
+
+export function getTotpStep(secret, code) {
+  if (!secret || !/^\d{6}$/.test(String(code))) {
+    return null;
+  }
+
+  // Create an authenticator with explicit TOTP settings.
+  const totpAuth = authenticator.clone();
+
+  totpAuth.options = {
+    step: 30,
+    window: 1
+  };
+
+  const delta = totpAuth.checkDelta(
+    String(code),
+    secret
+  );
+
+  if (delta === null) {
+    return null;
+  }
+
+  const currentStep = Math.floor(Date.now() / 30000);
+
+  return currentStep + delta;
 }
