@@ -154,9 +154,13 @@ Per the course's Responsible AI Use policy, we disclose the following use of
 5. How to do map query data to match what is in the API_CONTRACT.md file?
 6. Why should I enforce the rule where the user can't remove the final remaining passkey?
 
-### Ximena's prompts 
+### Ximena's prompts (Using Claude)
 1. How does the html file and the js files work together?
-2. How
+2. What is the dashboard.js supposed to do? How do I start setting it up?
+3. What are the api.js and app.js files for?
+4. How is the table with recent attempts going to update/get the information from?
+5. Why am I getting this error in my code?
+6. Why am I getting this error in terminal?
 
 ### Reflection
 
