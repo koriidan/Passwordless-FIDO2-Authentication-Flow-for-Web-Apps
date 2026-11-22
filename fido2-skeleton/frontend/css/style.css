@@ -122,3 +122,38 @@ button {
     margin-top: 10px;
     color: #b91c1c;
 }
+
+[hidden] {
+    display: none !important;
+}
+
+
+/* Make Push Notification match Authentication Code button */
+a.secondary-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 46px;
+    padding: 12px;
+    margin: 0;
+    box-sizing: border-box;
+
+    background-color: #f0f3f8;
+    color: #142b49;
+    border: none;
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a.secondary-button:visited {
+    color: #142b49;
+}
+
+a.secondary-button:hover {
+    background-color: #e2e8f0;
+}

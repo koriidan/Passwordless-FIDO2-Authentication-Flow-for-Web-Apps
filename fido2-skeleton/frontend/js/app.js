@@ -99,16 +99,9 @@ loginForm.addEventListener("submit", async function(event) {
     }
 });
 
-// Push login placeholder
-document.getElementById("pushLogin")
-    .addEventListener("click", function() {
-        const username = getUsername();
-        if (!username) return;
 
-        showMessage(
-            `Push authentication for ${username} is coming next.`
-        );
-    });
+
+
 
 // TOTP login placeholder
 document.getElementById("totpLogin")

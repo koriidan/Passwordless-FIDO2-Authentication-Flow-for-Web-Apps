@@ -93,3 +93,11 @@ export function verifyCode(username, code) {
         })
     });
 }
+
+// Start a push authentication request.
+export function initiatePush(username) {
+    return apiRequest("/push/initiate", {
+        method: "POST",
+        body: JSON.stringify({ username })
+    });
+}
