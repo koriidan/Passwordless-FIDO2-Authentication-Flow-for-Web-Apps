@@ -3,6 +3,7 @@ import { Router } from 'express';
 import crypto from 'node:crypto';
 import { requireFields, validUsername } from '../middleware/validate.js';
 import { rateLimit } from '../middleware/rateLimit.js';
+import { logAttempt } from '../db/index.js';
 
 const router = Router();
 
@@ -64,6 +65,12 @@ router.post('/push/respond', requireFields(['requestId', 'chosenNumber', 'approv
   const ok = req.body.approve === true && Number(req.body.chosenNumber) === p.correct;
   p.status = ok ? 'approved' : 'denied';
   // TODO (backend 5): logAttempt(p.username, 'push', p.status === 'approved' ? 'success' : 'fail')
+  logAttempt({
+    username: p.username,
+    method: 'push',
+    outcome: ok ? 'success' : 'fail',
+    detail: ok ? 'Approved with matching number' : 'Denied or number mismatch',
+  });
   res.json({ status: p.status });
 });
 
