@@ -1,33 +1,71 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome to your dashboard</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Dashboard</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
 </head>
-<body>
-  <h1>You're signed in!</h1>
-  
-  <p>Signed in as: <span id="username">...</span></p>
-  <p>Method: <span id="method">...</span></p>
-  
-  <h1>Recent sign-in attempts</h1>
-  <table>
-    <thead>
-    <tr>
-    <th>Time</th>
-    <th>Method</th>
-    <th>Result</th>
-    </tr>
- <thead>
- <tbody id="auditRows"></tbody>
-</table>
-<p id="auditMessage"></p>
-  
-  <button id="logoutButton">Log out</button>
 
+<body class="dashboard-page">
+    <main class="dashboard-container">
+        <div class="logo">🔐</div>
 
-  <script type="module" src="js/dashboard.js"></script>
+        <h1>Account Dashboard</h1>
+        <p class="subtitle">
+            Passwordless Authentication System
+        </p>
+
+        <section class="dashboard-section">
+            <h2>Account Information</h2>
+
+            <p>
+                Signed in as:
+                <strong id="username">Loading...</strong>
+            </p>
+
+            <p>
+                Login method:
+                <strong id="method">Loading...</strong>
+            </p>
+        </section>
+
+        <section class="dashboard-section">
+            <h2>Registered Passkeys</h2>
+
+            <ul id="deviceList">
+                <li>Loading registered passkeys...</li>
+            </ul>
+
+            <p id="deviceMessage"></p>
+        </section>
+
+        <section class="dashboard-section">
+            <h2>Recent Sign-in Attempts</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Method</th>
+                        <th>Result</th>
+                    </tr>
+                </thead>
+
+                <tbody id="auditRows"></tbody>
+            </table>
+
+            <p id="auditMessage"></p>
+        </section>
+
+        <button id="logoutButton" class="primary-btn">
+            Log Out
+        </button>
+    </main>
+
+    <script type="module" src="./js/dashboard.js"></script>
 </body>
 </html>

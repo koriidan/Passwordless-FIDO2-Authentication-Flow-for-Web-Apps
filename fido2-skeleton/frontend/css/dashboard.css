@@ -1,0 +1,89 @@
+
+/* Dashboard page layout */
+body.dashboard-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 30px 16px;
+    box-sizing: border-box;
+}
+
+/* Main dashboard card */
+.dashboard-container {
+    width: 100%;
+    max-width: 650px;
+    margin: auto;
+    padding: 35px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    box-sizing: border-box;
+}
+
+.dashboard-container h1,
+.dashboard-container .subtitle {
+    text-align: center;
+}
+
+.dashboard-container .logo {
+    text-align: center;
+    font-size: 35px;
+}
+
+/* Individual dashboard sections */
+.dashboard-section {
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px solid #ddd;
+}
+
+.dashboard-section h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+/* Passkey list */
+#deviceList {
+    padding-left: 20px;
+}
+
+#deviceList li {
+    margin-bottom: 10px;
+}
+
+/* Login history table */
+.dashboard-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.dashboard-container th,
+.dashboard-container td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.dashboard-container th {
+    background-color: #f3f6fc;
+}
+
+/* Logout button */
+#logoutButton {
+    width: 100%;
+    margin-top: 25px;
+    padding: 12px;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#logoutButton:hover {
+    background-color: #1d4ed8;
+}
