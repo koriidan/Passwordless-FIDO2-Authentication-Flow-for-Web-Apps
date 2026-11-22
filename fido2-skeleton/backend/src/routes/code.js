@@ -6,6 +6,7 @@ import { requireFields, validUsername } from '../middleware/validate.js';
 import { requireSession, createSession } from '../middleware/session.js';
 import { rateLimit } from '../middleware/rateLimit.js';
 import { newSecret, otpauthURI, verifyCode } from '../services/totp.js';
+import { logAttempt } from '../db/index.js';
 
 const router = Router();
 
@@ -24,6 +25,12 @@ router.post('/code/verify', rateLimit('code-verify'), validUsername, requireFiel
   // TODO (backend 3): reject a code whose time step was already used (replay).
   const ok = verifyCode('TODO-secret', req.body.code);
   // TODO (backend 5): logAttempt(username, 'code', ok ? 'success' : 'fail')
+  logAttempt({
+    username: req.body.username,
+    method: 'code',
+    outcome: ok ? 'success' : 'fail',
+    detail: ok ? 'TOTP verification succeeded' : 'TOTP verification failed',
+  });
   if (!ok) return res.status(400).json({ verified: false, error: 'Bad code' });
   createSession(res, 'TODO-userId', 'code');
   res.json({ verified: true });
