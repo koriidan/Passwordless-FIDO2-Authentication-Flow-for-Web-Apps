@@ -42,9 +42,46 @@ async function loadDevices() {
 
         data.devices.forEach(function(device, index) {
             const item = document.createElement("li");
-            item.textContent = `Passkey ${index + 1}`;
-            deviceList.appendChild(item);
-        });
+            const label = document.createElement("span");
+            label.textContent = `Passkey ${index + 1} `;
+
+            const removeButton = document.createElement("button");
+            removeButton.textContent = "Remove";
+            removeButton.type = "button";
+            removeButton.className = "remove-btn";
+
+            removeButton.addEventListener("click", async function() {
+            const confirmed = confirm(
+                "Are you sure you want to remove this passkey?"
+            );
+
+        if (!confirmed) return;
+
+        // Prevent accidental double-clicks.
+        removeButton.disabled = true;
+
+        try {
+            await apiRequest(
+                `/devices/${encodeURIComponent(device.credentialId)}`,
+                { method: "DELETE" }
+            );
+
+            deviceMessage.textContent =
+                "Passkey removed successfully.";
+
+            await loadDevices();
+
+        } catch (error) {
+            console.error("Remove passkey failed:", error);
+            deviceMessage.textContent = error.message;
+            removeButton.disabled = false;
+        }
+    });
+
+    item.appendChild(label);
+    item.appendChild(removeButton);
+    deviceList.appendChild(item);
+});
 
     } catch (error) {
         console.error("Device loading failed:", error);

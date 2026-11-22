@@ -87,3 +87,31 @@ body.dashboard-page {
 #logoutButton:hover {
     background-color: #1d4ed8;
 }
+
+
+/* Passkey management */
+#deviceList li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 0;
+}
+
+.remove-btn {
+    background-color: #dc2626;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 14px;
+    cursor: pointer;
+}
+
+.remove-btn:hover {
+    background-color: #b91c1c;
+}
+
+.remove-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
