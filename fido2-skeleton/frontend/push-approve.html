@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Approve Sign-In Request</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/push.css">
+</head>
+
+<body class="push-page">
+
+    <main class="login-container">
+
+        <div class="logo" aria-hidden="true">
+            <span>🔐</span>
+        </div>
+
+        <h1>Approve Sign-In</h1>
+
+        <p class="subtitle">
+            Review a pending authentication request
+            for your account.
+        </p>
+
+        <!-- Display current request -->
+        <section id="approvalSection" hidden>
+
+            <h2>Number Matching</h2>
+
+            <p>
+                Select the number shown on the
+                device requesting access.
+            </p>
+
+            <div class="number-options" id="numberOptions">
+                <!-- JavaScript will add choices here -->
+            </div>
+
+            <button
+                type="button"
+                id="approveButton"
+                class="primary-btn"
+                disabled>
+                Approve Sign-In
+            </button>
+
+            <button
+                type="button"
+                id="denyButton"
+                class="secondary-btn">
+                Deny Request
+            </button>
+
+        </section>
+
+        <p id="approvalMessage"
+           role="status"
+           aria-live="polite">
+            Checking for pending requests...
+        </p>
+
+        <p class="register-text">
+            <a href="dashboard.html">Back to Dashboard</a>
+        </p>
+
+    </main>
+
+    <script type="module" src="js/push-approve.js"></script>
+
+</body>
+</html>

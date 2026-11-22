@@ -53,3 +53,44 @@ body.push-page {
 [hidden] {
     display: none !important;
 }
+
+
+/* Push approval page */
+
+.number-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 24px 0;
+}
+
+.number-option {
+    padding: 18px 8px;
+    background: #eff6ff;
+    border: 2px solid #bfdbfe;
+    border-radius: 10px;
+    color: #1d4ed8;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.number-option:hover {
+    background: #dbeafe;
+}
+
+.number-option.selected {
+    border-color: #2563eb;
+    background: #bfdbfe;
+}
+
+#approveButton,
+#denyButton {
+    width: 100%;
+    margin-top: 12px;
+}
+
+#approvalMessage {
+    text-align: center;
+    margin-top: 18px;
+}

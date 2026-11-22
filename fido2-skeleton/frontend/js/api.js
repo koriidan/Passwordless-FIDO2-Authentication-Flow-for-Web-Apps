@@ -101,3 +101,42 @@ export function initiatePush(username) {
         body: JSON.stringify({ username })
     });
 }
+
+// Check the status of a push authentication request.
+export function getPushStatus(requestId) {
+    return apiRequest(
+        `/push/status/${encodeURIComponent(requestId)}`
+    );
+}
+
+/**
+ * Retrieve pending push authentication requests.
+ * The backend must identify the authenticated user
+ * from their session, not from a supplied username.
+ */
+export function getPendingPushRequests() {
+    return apiRequest("/push/pending");
+}
+
+/**
+ * Submit an approval or denial for a push request.
+ *
+ * requestId: ID of the pending request
+ * selectedNumber: number chosen by the user
+ * approved: whether the user approved the request
+ */
+
+export function respondToPush(
+    requestId,
+    selectedNumber,
+    approved
+) {
+    return apiRequest("/push/respond", {
+        method: "POST",
+        body: JSON.stringify({
+            requestId: requestId,
+            chosenNumber: selectedNumber,
+            approve: approved
+        })
+    });
+}
