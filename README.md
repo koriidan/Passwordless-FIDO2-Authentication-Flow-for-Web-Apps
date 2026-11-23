@@ -126,6 +126,7 @@ Per the course's Responsible AI Use policy, we disclose the following use of
    frontend be on there too?"
 7. "Can you list the distribution of work between the backend people... and
    explain the flow of the program and what it means to keep something persistent?"
+
 My exact prompts from T3 Code were not saved, so this is a summary of what I asked,
 reconstructed from my commit history (Nov 17–19):
 - Explaining how better-sqlite3 works (prepared statements, `.get` / `.all` / `.run`,
