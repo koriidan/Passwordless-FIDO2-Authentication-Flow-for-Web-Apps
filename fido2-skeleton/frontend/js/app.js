@@ -6,8 +6,7 @@ import {
 
 import {
     getLoginOptions,
-    verifyLogin,
-    verifyCode
+    verifyLogin
 } from "./api.js";
 
 const loginForm = document.getElementById("loginForm");
@@ -99,62 +98,3 @@ loginForm.addEventListener("submit", async function(event) {
         passkeyButton.disabled = false;
     }
 });
-
-
-<<<<<<< HEAD
-
-
-
-
-// TOTP fallback login
-
-const totpLoginButton = document.getElementById("totpLogin");
-const totpSection = document.getElementById("totpSection");
-const totpCodeInput = document.getElementById("totpCode");
-const verifyTotpButton = document.getElementById("verifyTotp");
-
-// Show the six-digit code input
-totpLoginButton.addEventListener("click", function() {
-    const username = getUsername();
-    if (!username) return;
-
-    totpSection.hidden = false;
-    totpCodeInput.focus();
-
-    showMessage("Enter the 6-digit code from your authenticator app.");
-});
-
-// Verify the authentication code
-verifyTotpButton.addEventListener("click", async function() {
-    const username = getUsername();
-    if (!username) return;
-
-    const code = totpCodeInput.value.trim();
-
-    if (!/^\d{6}$/.test(code)) {
-        showMessage("Please enter a valid 6-digit code.", true);
-        return;
-    }
-
-    verifyTotpButton.disabled = true;
-
-    try {
-        showMessage("Verifying authentication code...");
-
-        const result = await verifyCode(username, code);
-
-        if (result.verified === true) {
-            showMessage("Authentication successful!");
-            window.location.href = "dashboard.html";
-        } else {
-            showMessage("Invalid authentication code.", true);
-        }
-    } catch (error) {
-        console.error("TOTP login error:", error);
-        showMessage(error.message, true);
-    } finally {
-        verifyTotpButton.disabled = false;
-    }
-});
-=======
->>>>>>> 42be9a4 (Add TOTP authentication page and code verification)
