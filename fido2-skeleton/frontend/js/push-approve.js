@@ -137,18 +137,74 @@ denyButton.addEventListener("click", async () => {
 });
 
 // Verify the approver is already authenticated.
+
+let refreshTimer = null;
+let refreshing = false;
+
 async function initializeApprovalPage() {
     try {
+        // Confirm the approving device has a valid session.
         await getSession();
-        await loadPendingRequests();
+
+        // Load pending requests immediately.
+        await refreshPendingRequests();
+
+        // Automatically check again every 3 seconds.
+        refreshTimer = setInterval(() => {
+            if (!document.hidden && !refreshing) {
+                refreshPendingRequests();
+            }
+        }, 3000);
+
     } catch (error) {
         console.error("Approval session check failed:", error);
         approvalSection.hidden = true;
+
         showMessage(
             "You must sign in on this trusted device first.",
             true
         );
     }
 }
+
+async function refreshPendingRequests() {
+    if (refreshing) return;
+    refreshing = true;
+
+    try {
+        // Don't reset the selected number every time
+        // unless the current request has changed.
+        const data = await getPendingPushRequests();
+        const requests = data.requests || [];
+
+        if (requests.length === 0) {
+            currentRequest = null;
+            selectedNumber = null;
+            approvalSection.hidden = true;
+            showMessage("No pending sign-in requests.");
+            return;
+        }
+
+        const newestRequest = requests[requests.length - 1];
+
+        // Only redraw when the request changes.
+        if (currentRequest?.requestId !== newestRequest.requestId) {
+            await loadPendingRequests();
+        }
+
+    } catch (error) {
+        console.error("Unable to refresh requests:", error);
+        showMessage(error.message, true);
+    } finally {
+        refreshing = false;
+    }
+}
+
+window.addEventListener("beforeunload", () => {
+    if (refreshTimer !== null) {
+        clearInterval(refreshTimer);
+    }
+});
+
 
 initializeApprovalPage();
