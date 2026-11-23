@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Authentication Code Login</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/totp.css">
+</head>
+
+<body class="totp-page">
+    <main class="login-container">
+
+        <div class="logo" aria-hidden="true">
+            <span>🔐</span>
+        </div>
+
+        <h1>Authentication Code</h1>
+
+        <p class="subtitle">
+            Enter the 6-digit code from your
+            authenticator app to sign in.
+        </p>
+
+        <form id="totpForm">
+
+            <div class="input-group">
+                <label for="totpUsername">Username</label>
+                <input
+                    type="text"
+                    id="totpUsername"
+                    name="username"
+                    placeholder="Enter your username"
+                    autocomplete="username"
+                    required
+                >
+            </div>
+
+            <div class="input-group">
+                <label for="totpCode">Authentication Code</label>
+                <input
+                    type="text"
+                    id="totpCode"
+                    name="code"
+                    placeholder="000000"
+                    inputmode="numeric"
+                    pattern="[0-9]{6}"
+                    maxlength="6"
+                    autocomplete="one-time-code"
+                    required
+                >
+            </div>
+
+            <button
+                type="submit"
+                id="verifyTotp"
+                class="primary-btn">
+                Verify Code
+            </button>
+
+        </form>
+
+        <p id="message"
+           role="status"
+           aria-live="polite"></p>
+
+        <p class="register-text">
+            <a href="index.html">Back to Login</a>
+        </p>
+
+    </main>
+
+    <script type="module" src="js/totp.js"></script>
+</body>
+</html>

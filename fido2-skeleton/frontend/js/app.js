@@ -101,6 +101,7 @@ loginForm.addEventListener("submit", async function(event) {
 });
 
 
+<<<<<<< HEAD
 
 
 
@@ -155,3 +156,5 @@ verifyTotpButton.addEventListener("click", async function() {
         verifyTotpButton.disabled = false;
     }
 });
+=======
+>>>>>>> 42be9a4 (Add TOTP authentication page and code verification)

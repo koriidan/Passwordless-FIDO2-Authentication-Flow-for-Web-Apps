@@ -157,3 +157,37 @@ a.secondary-button:visited {
 a.secondary-button:hover {
     background-color: #e2e8f0;
 }
+
+
+/* Style authentication links consistently */
+a.secondary-button,
+a.secondary-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 46px;
+    padding: 12px;
+    box-sizing: border-box;
+
+    background-color: #f0f3f8;
+    color: #142b49;
+    border: none;
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a.secondary-button:visited,
+a.secondary-btn:visited {
+    color: #142b49;
+}
+
+a.secondary-button:hover,
+a.secondary-btn:hover {
+    background-color: #e2e8f0;
+}
