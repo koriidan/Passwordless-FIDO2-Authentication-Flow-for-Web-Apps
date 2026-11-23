@@ -235,3 +235,6 @@ The usage of ChatGPT as a source of knowledge and troubleshooting was also very 
 
 ### Annette's Reflection
 ChatGPT helped me to better understand TOTP authentication and how it works with Google Authenticator. It helped me learn the purpose of QR code enrollment, how the frontend and backend communicate, and the security risks involved in authentication. I also used it to explore different testing methods and understand how to evaluate the security of our application. Throughout the project, I applied what I learned by working with the code, running tests, and checking the results.
+
+### Ximena's Reflection
+I am not very familiar with JavaScript and how it comes into play with the frontend and backend. Using Claude helped me understand how the js files would work with the html so that the frontend and the backend would worked together.It helped guide me and understand the basics of JavaScript and how to implement it correctly so it would work along with the dashboard.html. I am also not very familiar with GutHub so it also helped me managing that and making sure that things were being committed and set up correctly.
