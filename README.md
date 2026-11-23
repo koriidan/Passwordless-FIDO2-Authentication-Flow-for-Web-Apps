@@ -106,6 +106,8 @@ Per the course's Responsible AI Use policy, we disclose the following use of
   rather than direct function calls, why validation done in the browser must be
   repeated on the server, and the difference between persistent and in-memory
   storage.
+- **Security Concept:** helped explain TOTP authentication, rate limiting,
+  and replay protection.
 - **Initial skeleton code:** Claude generated the starting backend structure
   (folder layout, `API_CONTRACT.md`, database schema, and stub routes marked with
   `TODO` comments). The authentication logic marked `TODO` is being written by
@@ -195,6 +197,13 @@ reconstructed from my commit history (Nov 17–19):
 6. How can I test whether application features are functioning correctly?
 7. How do I manage changes and collaborate using Git and GitHub?
 
+### Annette's Prompts (Using ChatGPT)
+1. How does TOTP authentication work with Google Authenticator?
+2. What is the purpose of QR code enrollment in TOTP authentication?
+3. How do the frontend and backend communicate during TOTP verification?
+4. What security risks should be considered when implementing TOTP authentication?
+5. What test cases should be considered when evaluating TOTP authentication?
+
 ### Reflection
 
 Claude helped us choose the FIDO2 project and gave us a starting structure when
@@ -224,3 +233,5 @@ I don't have much experience with JavaScript let alone node.js and express.  So 
 ### Lydia's Reflection
 The usage of ChatGPT as a source of knowledge and troubleshooting was also very useful during the whole project. With its help, I managed to gain deeper insight into the frontend development topics, how the authentication works, and how the components of a web application interact. All in all, the usage of AI helped me feel more confident in JavaScript development and problem-solving. On the other hand, there were some things that I had to check myself as far as the suggestions had to be adjusted for our project.
 
+### Annette's Reflection
+ChatGPT helped me to better understand TOTP authentication and how it works with Google Authenticator. It helped me learn the purpose of QR code enrollment, how the frontend and backend communicate, and the security risks involved in authentication. I also used it to explore different testing methods and understand how to evaluate the security of our application. Throughout the project, I applied what I learned by working with the code, running tests, and checking the results.
